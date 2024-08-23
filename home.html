@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube 動画埋め込み</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+margin: 20px;
+}
+#videoContainer {
+margin-top: 20px;
+}
+</style>
+</head>
+<body>
+<h1>YouTube 動画埋め込み</h1>
+<input type="text" id="youtubeUrl" placeholder="YouTubeの動画URLを入力してください">
+<button onclick="embedVideo()">動画を表示</button>
+
+<div id="videoContainer"></div>
+
+<script>
+function embedVideo() {
+const url = document.getElementById('youtubeUrl').value;
+const videoId = extractVideoId(url);
+const videoContainer = document.getElementById('videoContainer');
+
+if (videoId) {
+videoContainer.innerHTML = `<iframe width="560" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>`;
+} else {
+videoContainer.innerHTML = '無効なURLです。';
+}
+}
+
+function extractVideoId(url) {
+const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+const match = url.match(regex);
+return match ? match[1] : null;
+}
+</script>
+</body>
+</html>
